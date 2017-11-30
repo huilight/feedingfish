@@ -13,15 +13,6 @@ class ControlFishNum:
 				CreateFish.get_fish(i, 1)
 
 class CheckFishNum:
-	# num = {"0":0,"2":0,"4":0}
-
-	# @classmethod
-	# def add_num(cls, level, num=1):
-	# 	CreateFishNum.num[level] += num
-
-	# @classmethod
-	# def sub_num(cls, level, num=1):
-	# 	CreateFishNum.num[level] -= num
 
 	@classmethod
 	def get_num(cls, level):
@@ -31,23 +22,26 @@ class CheckFishNum:
 class CreateFish:
 	@classmethod
 	def level2imgid(cls, level):
-			if level == 0:
-				return 193
-			elif level == 2:
-				return 245
-			else:
-				return 131
+		"""根据等级得到起始图像文件名"""
+		if level == 0:
+			return 193
+		elif level == 2:
+			return 245
+		else:
+			return 131
 
 	@classmethod
-	def get_x(cls, ch):
-		if ch==0:
-			return -1
+	def get_x(cls):
+		"""得到出生横坐标"""
+		if randint(0,1):
+			return -1  #出生在屏幕左侧
 		else:
-			return 800
+			return 900 #出生在右侧
 
 	@classmethod
 	def get_fish(cls, level, num=1):
+		"""生成一个鱼"""
 		for i in range(num):
-			f1 = Fishes(Vector2(CreateFish.get_x(randint(-1,0)), randint(0,550)),level, \
+			f1 = Fishes(Vector2(CreateFish.get_x(), randint(0,550)),level, \
 				CreateFish.level2imgid(level))
 			f1.add(data.level_group[str(level)])

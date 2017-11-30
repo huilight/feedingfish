@@ -1,14 +1,16 @@
 import pygame,data
 from pygame.locals import *
 
+#绘制背景
 class DrawBackground:
 	fn_background = "./images/Image 112.jpg"
 	fn_stone = "./images/Image 120.png"
 	fn_stage1 = "./images/Image 582.png"
 	fn_stage2 = "./images/Image 585.png"
-	fn_state_line = "./images/Image 1104.png"
+	fn_status_line = "./images/Image 1104.png"
 	fn_control = "./images/ImageControl.png"
-	fn_pause = "./images/ImagePause.png"
+	fn_pause_button = "./images/ImagePause.png"
+	fn_pause = "./images/Image 1110.png"
 	position = (55,0)
 
 	def __init__(self):
@@ -21,14 +23,16 @@ class DrawBackground:
 		self.stone = pygame.image.load(DrawBackground.fn_stone).convert_alpha()
 		self.stage1 = pygame.image.load(DrawBackground.fn_stage1).convert_alpha()
 		self.stage2 = pygame.image.load(DrawBackground.fn_stage2).convert_alpha()
-		self.state_line = pygame.image.load(DrawBackground.fn_state_line).convert_alpha()
-		self.state_line = pygame.transform.smoothscale(self.state_line, (data.SCREEN_SIZE[0],55))
+		self.status_line = pygame.image.load(DrawBackground.fn_status_line).convert_alpha()
+		self.status_line = pygame.transform.smoothscale(self.status_line, (data.SCREEN_SIZE[0],55))
 		self.control = pygame.image.load(DrawBackground.fn_control).convert_alpha()
+		self.pause_button = pygame.image.load(DrawBackground.fn_pause_button).convert_alpha()
 		self.pause = pygame.image.load(DrawBackground.fn_pause).convert_alpha()
 		self.bg_position = pygame.math.Vector2(0,-170)
 		self.step = (0,0)
 		self.pos = (0,55)
 
+	#屏幕滚动
 	def move(self,pos):
 		self.pos = pos
 		if pos[0] < 150:
@@ -69,10 +73,10 @@ class DrawBackground:
 		surface.blit(self.stage1,self.bg_position+(424, 568))
 		surface.blit(self.stage2,self.bg_position+(252, 650))
 
-	def draw_state(self, surface):
-		surface.blit(self.state_line,(0,0))
+	def draw_status(self, surface):
+		surface.blit(self.status_line,(0,0))
 		surface.blit(self.control,(440,2))
-		surface.blit(self.pause,(480,2))
+		surface.blit(self.pause_button,(480,2))
 
 	def draw_score(self, surface):
 		surface.blit(self.score,(78,5))
@@ -88,3 +92,8 @@ class DrawBackground:
 		else:
 			length = 215
 		pygame.draw.rect(surface, (0,0,255),Rect((578,25),(length,9)))
+
+	def draw_pause(self, surface):
+		surface.blit(self.pause, (data.SCREEN_SIZE[0]/2-80,\
+			data.SCREEN_SIZE[1]/2-32))
+		pygame.display.update()

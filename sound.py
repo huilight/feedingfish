@@ -9,13 +9,13 @@ class SoundControl:
 	def draw_surface(cls, surface):
 		sound_pad = pygame.image.load(SoundControl.fn_sound_pad).convert_alpha()
 		surface.blit(sound_pad, SoundControl.pos)
-		SoundControl.draw_state(surface, BgMusic)
-		SoundControl.draw_state(surface, SoundEffect)
+		SoundControl.draw_status(surface, BgMusic)
+		SoundControl.draw_status(surface, SoundEffect)
 		SoundControl.draw_volume(surface, BgMusic)
 		SoundControl.draw_volume(surface, SoundEffect)
 
 	@classmethod
-	def draw_state(cls, surface, obj):
+	def draw_status(cls, surface, obj):
 		if obj.sound_is_open:
 			color = (0, 0, 255)
 		else:
@@ -30,6 +30,26 @@ class SoundControl:
 		vol_length = obj.get_volume()*143
 		pygame.draw.rect(surface, (0,0,255),\
 			pygame.locals.Rect(SoundControl.pos+obj.volume_pos,(vol_length,12)))
+	
+	@classmethod
+	def change_volume(cls, surface, sound, pos, base_num):
+		length = pos - base_num
+		sound.set_volume(length/143)
+		SoundControl.draw_volume(surface, sound)
+		while True:
+			pygame.display.update()
+			for event in pygame.event.get():
+				if event.type == pygame.locals.MOUSEMOTION:
+					length = event.pos[0] - SoundControl.pos[0] - base_num
+					if length <= 0:
+						sound.set_volume(0)
+					elif length >= 143:
+						sound.set_volume(1)
+					else:	
+						sound.set_volume(length/143)
+					SoundControl.draw_volume(surface, sound)
+				if event.type == pygame.locals.MOUSEBUTTONUP:
+					return
 
 	@classmethod
 	def open(cls, surface):
@@ -45,32 +65,21 @@ class SoundControl:
 					pos = event.pos-SoundControl.pos
 					if pos[0] >= 95 and pos[1]>= 46 and \
 					pos[0] <= 115 and pos[1] <= 66:
-						BgMusic.change_state()
-						SoundControl.draw_state(surface, BgMusic)
+						BgMusic.change_status()
+						SoundControl.draw_status(surface, BgMusic)
 
 					if pos[0] >= 347 and pos[1]>= 46 and \
 					pos[0] <= 367 and pos[1] <= 66:
-						SoundEffect.change_state()
-						SoundControl.draw_state(surface, SoundEffect)
+						SoundEffect.change_status()
+						SoundControl.draw_status(surface, SoundEffect)
 
 					if pos[0] >= 81 and pos[1]>= 81 and \
 					pos[0] <= 224 and pos[1] <= 92:
-						length = pos[0] - 81
-						BgMusic.set_volume(length/143)
-						SoundControl.draw_volume(surface, BgMusic)
-						pygame.display.update()
-						loop = True
-						while loop:
-							for event in pygame.event.get():
-								if event.type == pygame.locals.MOUSEMOTION:
-									length = event.pos[0] - SoundControl.pos[0] - 81
-									print(length)
-									if length >= 0 and length <= 143:
-										BgMusic.set_volume(length/143)
-										SoundControl.draw_volume(surface, BgMusic)
-										pygame.display.update()
-								if event.type == pygame.locals.MOUSEBUTTONUP:
-									loop = False
+						SoundControl.change_volume(surface, BgMusic, pos[0], 81)
+
+					if pos[0] >= 333 and pos[1]>= 81 and \
+					pos[0] <= 475 and pos[1] <= 92:
+						SoundControl.change_volume(surface, SoundEffect, pos[0], 333)
 
 					if pos[0] >= 196 and pos[1]>= 134 and \
 					pos[0] <= 304 and pos[1] <= 164:
@@ -111,7 +120,7 @@ class BgMusic(Sound):
 		pygame.mixer.music.play(-1)
 
 	@classmethod
-	def change_state(cls):
+	def change_status(cls):
 		if BgMusic.sound_is_open:
 			BgMusic.close()
 		else:
@@ -139,12 +148,14 @@ class SoundEffect(Sound):
 	pos = (347,46)
 	volume_pos = (333, 81)
 	sound_is_open = True
+	sound_volume = 1
 	fn_sound_eat = "./Sounds/Sound 571.ogg" #eat
+
 	def __init__(self):
 		pass
 		
 	@classmethod
-	def change_state(cls):
+	def change_status(cls):
 		if SoundEffect.sound_is_open:
 			SoundEffect.close()
 		else:
@@ -160,11 +171,11 @@ class SoundEffect(Sound):
 
 	@classmethod
 	def set_volume(cls, volume):
-		pygame.mixer.music.set_volume(volume)
+		SoundEffect.sound_volume = volume
 
 	@classmethod
 	def get_volume(cls):
-		return pygame.mixer.music.get_volume()
+		return SoundEffect.sound_volume
 
 	@classmethod
 	def play(cls, type):
@@ -174,6 +185,7 @@ class SoundEffect(Sound):
 		if type == "eat":
 			sound = pygame.mixer.Sound(SoundEffect.fn_sound_eat)
 
+		sound.set_volume(SoundEffect.sound_volume)
 		sound.play()
 
 

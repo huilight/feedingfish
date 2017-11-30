@@ -1,6 +1,7 @@
 import pygame
 
 def collide_rect(sprite1, sprite2):
+	"""接收两个精灵作为参数，检测是否碰撞"""
 	if sprite1.rect[0]+6<sprite2.rect[0] and \
 	   sprite2.rect[0]<sprite1.rect[2]-6 and \
 	   sprite1.rect[1]+6<sprite2.rect[1] and \

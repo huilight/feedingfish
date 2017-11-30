@@ -34,16 +34,21 @@ while True:
 			bg.move(event.pos)
 			
 		if event.type == MOUSEBUTTONDOWN:
+			#按下控制按钮
 			if event.pos[0] >= 440 and event.pos[0] <= 465 and \
 			 event.pos[1] >= 2 and event.pos[1] <= 27:
 				sound.SoundControl.visible = True
-				
+			
+			#按下暂停按钮
 			elif event.pos[0] >= 480 and event.pos[0] <= 505 and \
 			 event.pos[1] >= 2 and event.pos[1] <= 27:
+				bg.draw_pause(screen)
+				sound.BgMusic.close()
 				ev = pygame.event.wait()
 				while not ev.type == MOUSEBUTTONDOWN:
 					ev = pygame.event.wait()
-				clock.tick()
+				clock.tick() #排除暂停时间
+				sound.BgMusic.open()
 
 	bg.update()
 	time_passed = clock.tick()/1000
@@ -74,11 +79,11 @@ while True:
 		ea.e.update(time_passed)
 		ea.e.draw(screen)
 
-	bg.draw_state(screen)
+	bg.draw_status(screen)
 	bg.draw_score(screen)
 
 	if sound.SoundControl.visible:
 		sound.SoundControl.draw_surface(screen)
 		sound.SoundControl.open(screen)
-		clock.tick()
+		clock.tick() #排除暂停时间
 	pygame.display.update()
