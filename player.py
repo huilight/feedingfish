@@ -48,11 +48,12 @@ class Player(Fish):
 		self.image = self.imgo.img
 
 	def kill(self):
+		"""处理死亡后的事件"""
 		self.death_time += 1
 		if self.death_time == 3:
 			pass
-		if self.level>1:
-			self.level -= 1
+		# if self.level>1:
+		# 	self.level -= 1
 		self.pos = (data.SCREEN_SIZE[0]/2,data.SCREEN_SIZE[1]/2)
 
 	def draw(self, surface):

@@ -26,7 +26,10 @@ class Fish(pygame.sprite.Sprite):
 
 	def move(self, time_passed, bg_position):
 		pos = self.dest - self.pos
-		self.pos += self.direction * (self.speed*time_passed)
+		try:
+			self.pos += self.direction * (self.speed*time_passed)
+		except:
+			print(self.pos, self.direction, self.speed, self.time_passed)
 		self.change_rect(bg_position)
 
 	def get_pos(self):
