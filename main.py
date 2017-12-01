@@ -43,12 +43,15 @@ while True:
 			elif event.pos[0] >= 480 and event.pos[0] <= 505 and \
 			 event.pos[1] >= 2 and event.pos[1] <= 27:
 				bg.draw_pause(screen)
-				sound.BgMusic.close()
+				state = sound.BgMusic.sound_is_open
+				if state:
+					sound.BgMusic.close()
 				ev = pygame.event.wait()
 				while not ev.type == MOUSEBUTTONDOWN:
 					ev = pygame.event.wait()
 				clock.tick() #排除暂停时间
-				sound.BgMusic.open()
+				if state:
+					sound.BgMusic.open()
 
 	bg.update()
 	time_passed = clock.tick()/1000
