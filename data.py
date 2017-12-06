@@ -4,6 +4,8 @@ SCREEN_SIZE = (800,550)
 
 #记录得分
 score = 0
+#难度等级
+hard_level = 1
 
 #升至相应等级需要的分数
 level1_score = 300
