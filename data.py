@@ -18,9 +18,9 @@ level2 = pygame.sprite.Group()
 level4 = pygame.sprite.Group()
 level_group = {"0":level0, "2":level2, "4":level4}
 
-level0_fish_num = 15
-level2_fish_num = 3
-level4_fish_num = 2
+level0_fish_num = 20
+level2_fish_num = 2
+level4_fish_num = 1
 fish_num = {"0":level0_fish_num, \
 			"2":level2_fish_num, \
 			"4":level4_fish_num}

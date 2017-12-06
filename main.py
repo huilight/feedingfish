@@ -1,4 +1,4 @@
-import pygame, drawbg, tools, eat, data,fishnum, sound
+import pygame, drawbg, tools, eat, data,fishnum, sound, menu
 import time as timer
 from player import Player
 from pygame.math import Vector2
@@ -10,6 +10,12 @@ pygame.mixer.pre_init(44100, 16, 2, 1024*4)
 pygame.init()
 
 screen = pygame.display.set_mode(data.SCREEN_SIZE,0,32)
+#显示菜单
+menu.Menu(screen).run()
+tools.hard_choose()
+
+mov = pygame.event.Event(MOUSEMOTION,{"pos":(data.SCREEN_SIZE[0]/2,data.SCREEN_SIZE[1]/2)})
+pygame.event.post(mov)
 
 bg = drawbg.DrawBackground()
 

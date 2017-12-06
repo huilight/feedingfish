@@ -1,4 +1,4 @@
-import pygame
+import data
 
 def collide_rect(sprite1, sprite2):
 	"""接收两个精灵作为参数，检测是否碰撞"""
@@ -23,3 +23,21 @@ def collide_rect(sprite1, sprite2):
 	   sprite2.rect[3]<sprite1.rect[3]-6:
 		return True
 	return False
+
+def hard_choose():
+	if data.hard_level == 1:
+		data.level0_fish_num = 20
+		data.level2_fish_num = 2
+		data.level4_fish_num = 1
+	elif data.hard_level == 2:
+		data.level0_fish_num = 15
+		data.level2_fish_num = 3
+		data.level4_fish_num = 2
+	else:
+		data.level0_fish_num = 10
+		data.level2_fish_num = 4
+		data.level4_fish_num = 3
+
+	data.fish_num = {"0":data.level0_fish_num, \
+			"2":data.level2_fish_num, \
+			"4":data.level4_fish_num}
