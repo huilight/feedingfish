@@ -1,4 +1,4 @@
-import pygame, drawbg, tools, eat, data,fishnum, sound, menu
+import pygame, drawbg, tools, eat, data,fishnum, sound, menu, gamestatus
 import time as timer
 from player import Player
 from pygame.math import Vector2
@@ -29,6 +29,7 @@ se = sound.SoundEffect()
 bgmusic = sound.BgMusic()
 bgmusic.set_volume(1)
 ea = eat.Eat()
+game = gamestatus.GameStatus(p1, screen)
 
 while True:
 	for event in pygame.event.get():
@@ -78,6 +79,8 @@ while True:
 			f.move(time_passed, bg.bg_position)
 
 	ea.eat(bg, p1)
+	if game.win_or_loss():
+		clock.tick()
 
 	bg.draw(screen)
 	p1.draw(screen)
