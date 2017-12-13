@@ -1,4 +1,4 @@
-import pygame, data
+import pygame, data, sys
 
 class GameStatus:
 
@@ -41,11 +41,9 @@ class GameStatus:
 		while True:
 			event = pygame.event.wait()
 			if event.type == pygame.locals.QUIT:
-				exit()
+				sys.exit()
 			if event.type == pygame.locals.MOUSEBUTTONDOWN:
-				self.player.score = 0
-				data.score = 0
+				self.player.restart()
 				for group in data.level_group.values():
 					group.empty()
-				self.player.death_time = 0
 				return True

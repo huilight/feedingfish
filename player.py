@@ -78,3 +78,10 @@ class Player(Fish):
 		self.time = 0
 		self.rect = self.image.get_rect()
 		self.rect2 = self.image.get_rect()
+
+	def restart(self):
+		self.score = 0
+		data.score = 0
+		self.death_time = 0
+		self.level = -1
+		self.grow()

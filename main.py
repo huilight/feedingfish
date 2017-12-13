@@ -1,4 +1,4 @@
-import pygame, drawbg, tools, eat, data,fishnum, sound, menu, gamestatus
+import pygame, drawbg, tools, eat, data,fishnum, sound, menu, gamestatus, sys
 import time as timer
 from player import Player
 from pygame.math import Vector2
@@ -34,7 +34,7 @@ game = gamestatus.GameStatus(p1, screen)
 while True:
 	for event in pygame.event.get():
 		if event.type == QUIT:
-			exit()
+			sys.exit()
 
 		if event.type == MOUSEMOTION:
 			p1.set_dest(Vector2(event.pos))

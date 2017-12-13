@@ -1,4 +1,4 @@
-import pygame, eat, data
+import pygame, eat, data, sys
 
 class SoundControl:
 	fn_sound_pad = "./images/ImageSoundControlPad.png"
@@ -59,7 +59,7 @@ class SoundControl:
 		while True:
 			for event in pygame.event.get():
 				if event.type == pygame.locals.QUIT:
-					exit()
+					sys.exit()
 				if event.type == pygame.locals.MOUSEBUTTONDOWN:
 
 					pos = event.pos-SoundControl.pos

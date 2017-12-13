@@ -1,4 +1,4 @@
-import pygame, drawbg, data, time
+import pygame, drawbg, data, time, sys
 
 class Menu:
 	fn_img_play = "Images/Image 16.png"
@@ -38,7 +38,7 @@ class Menu:
 		while True:
 			for event in pygame.event.get():
 				if event.type == pygame.locals.QUIT:
-					exit()
+					sys.exit()
 				if event.type == pygame.locals.MOUSEMOTION:
 					if event.pos[0]>=344 and event.pos[0]<=452 and \
 						event.pos[1]>=380 and event.pos[1]<=410:
